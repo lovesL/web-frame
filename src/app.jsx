@@ -1,10 +1,11 @@
+import React from 'react';
 import { PageLoading } from '@ant-design/pro-layout';
-import { history, Link } from 'umi';
+import { history } from 'umi';
 import RightContent from '@/components/RightContent';
 import Footer from '@/components/Footer';
-import { BookOutlined, LinkOutlined } from '@ant-design/icons';
-const isDev = process.env.NODE_ENV === 'development';
 import { getMenus } from '@/services/client';
+
+const isDev = process.env.NODE_ENV === 'development';
 const loginPath = '/user/login';
 /** 获取用户信息比较慢的时候会展示一个 loading */
 
@@ -41,30 +42,27 @@ export const initialStateConfig = {
 //   };
 // } // ProLayout 支持的api https://procomponents.ant.design/components/layout
 
-let extraRoutes;
-
-// extraRoutesexport function patchRoutes({ routes }) {
-//
-// }
-//
-export function render(oldRender) {
-  const { location } = history
-  if(location.pathname !== '/'){
-    if(location.query.sys){
-      getMenus(location.query.sys).then(res=>{
-        console.log(res);
-      })
-    }
-
-  }
-  oldRender();
+export function patchRoutes({ routes }) {
+  console.log(routes);
 }
+
 
 export const layout = ({ initialState }) => {
   return {
     rightContentRender: () => <RightContent />,
     disableContentMargin: false,
     footerRender: () => <Footer />,
+    menu: {
+      locale:false,
+      request: async (params, defaultMenuData) => {
+        const sys = sessionStorage.getItem('sys');
+        let menus = [];
+        if (sys && sys != '') {
+          menus = await getMenus(sys);
+        }
+        return menus.data;
+      },
+    },
     onPageChange: () => {
       const { location } = history; // 如果没有登录，重定向到 login
 
@@ -72,18 +70,7 @@ export const layout = ({ initialState }) => {
       //   history.push(loginPath);
       // }
     },
-    links: isDev
-      ? [
-          <Link to="/umi/plugin/openapi" target="_blank">
-            <LinkOutlined />
-            <span>OpenAPI 文档</span>
-          </Link>,
-          <Link to="/~docs">
-            <BookOutlined />
-            <span>业务组件文档</span>
-          </Link>,
-        ]
-      : [],
+    links: [],
     menuHeaderRender: undefined,
     // 自定义 403 页面
     // unAccessible: <div>unAccessible</div>,

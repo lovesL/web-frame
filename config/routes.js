@@ -1,3 +1,5 @@
+import dynamicRoutes from './dynamicRoutes'
+
 export default [
   {
     path: '/user/login',
@@ -8,6 +10,9 @@ export default [
     path: '/',
     component: './Root',
     layout: false,
+    routes:[
+        ...dynamicRoutes
+    ],
   },
   {
     component: './404',

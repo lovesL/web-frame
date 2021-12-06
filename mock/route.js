@@ -4,14 +4,12 @@ export default {
       res.send({
         data: [
           {
-            path: '/des1',
-            name: '菜单1',
-            component:'@/eawcs/page1'
+            path: '/eawcs/des1',
+            name: '环水保菜单1',
           },
           {
-            path: '/des2',
-            name: '菜单2',
-            component:'@/eawcs/page2'
+            path: '/eawcs/des2',
+            name: '环水保菜单2',
           }
         ],
         success: true,
@@ -20,14 +18,14 @@ export default {
       res.send({
         data: [
           {
-            path: '/dem1',
-            name: '菜单1',
-            component:'@/demolition/page1'
+            path: '/demolition/dem1',
+            name: '先签后建菜单1',
+            exact: true,
           },
           {
-            path: '/dem2',
-            name: '菜单2',
-            component:'@/demolition/page2'
+            path: '/demolition/dem2',
+            name: '先签后建菜单2',
+            exact: true,
           }
         ],
         success: true,

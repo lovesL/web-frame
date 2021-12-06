@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { Avatar, Typography, Space } from 'antd';
+import { Avatar, Typography } from 'antd';
 import { useRequest } from 'ahooks';
 import { history } from 'umi';
 import { getClient, getMenus } from '@/services/client';
-import './index.less'
+import './index.less';
 
 const { Text } = Typography;
 const Root = () => {
@@ -18,8 +18,9 @@ const Root = () => {
   },[])
 
   const handleClick = async (key) => {
-    const data=  await secon.run(key);
-    history.push(`${ data.data.shift().path }?sys=${ key }`);
+    const data = await secon.run(key);
+    sessionStorage.setItem('sys', key);
+    history.push(`${ data.data.shift().path }`);
   }
   return (
     <div className="clientWrapper">
